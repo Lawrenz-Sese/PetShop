@@ -1,0 +1,125 @@
+<mat-sidenav-container autosize>
+
+  <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()">
+    <div class="user-profile">
+      <img src="./assets/visual/logo.png">
+    </div>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout">
+      <mat-icon style="margin-right: 10%; margin-left: 10%;">pets</mat-icon> Checkout Items
+    </button>
+
+
+  </mat-sidenav>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="example-icon" (click)="isExpanded = !isExpanded"
+        aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
+        <mat-icon style="color: #424242;" *ngIf="!isExpanded">menu</mat-icon>
+        <mat-icon style="color: #424242;" *ngIf="isExpanded">menu</mat-icon>
+      </button>
+      <h1 style="color: #424242; font-size: 16px;"></h1>
+
+      <span class="example-spacer"></span>
+
+      <div class="user__name">
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu">Lawrenz Sese Diestro
+          <mat-icon>arrow_drop_down</mat-icon> </span>
+      </div>
+
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Account Information</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>favorite</mat-icon>
+          <span> View Favorites</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="container">
+      <div class="title">
+        <h3>Dasboard</h3>
+      </div>
+
+      <div class="dashboard">
+        <div class="dashboard-left">
+          <div class="dashboard-banner">
+            <div class="banner-left">
+              <h2>They are more than a pet, a family!</h2>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, laboriosam.</p>
+              <button>See more</button>
+            </div>
+            <div class="banner-right">
+              <img src="./assets/visual/dashboard-banner.svg" alt="">
+            </div>
+          </div>
+
+          <div class="title" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2%;">
+            <h3 style="margin-left: 0;">Featured Pets</h3>
+            <span style="margin-right: 40px; font-size: .9rem; cursor: pointer;" class="see" routerLink="/pet-lists">See more ...</span>
+          </div>
+
+          <div class="pet-container">
+            <div class="pet-card" *ngFor="let pets of pets.slice(0, 4);">
+                <img src="{{pets.pet_img}}" alt="">
+                <span class="name">{{pets.pet_breed}}</span>
+            </div>
+          </div>
+
+          <div class="title" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2%;">
+            <h3 style="margin-left: 0;">Featured Products</h3>
+            <span style="margin-right: 40px; font-size: .9rem; cursor: pointer;" class="see">See more ...</span>
+          </div>
+
+          <div class="pet-container">
+            <div class="pet-card" *ngFor="let pets of pets.slice(0, 4);">
+                <img src="{{pets.pet_img}}" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-right">
+            <h3 style="display: flex; justify-content: space-between; align-items: center; margin: 20px 15px 0px 15px">
+                <span>Cart Items</span>
+                <mat-icon matBadge="{{cartCounter}}" matBadgeColor="warn" style="cursor: pointer" title="View All Purchase" routerLink="/cart">shopping_basket</mat-icon>
+            </h3>
+
+            <div class="cart-container">
+                <div class="cart-card" *ngFor="let cart of cart">
+                    <div class="cart-image">
+                        <div class="dot">
+                            <img src="{{cart.pet_img}}" alt="">
+                        </div>
+                    </div>
+                    <div class="cart-info">
+                        <h3>{{cart.pet_breed}} | Qty: {{cart.pet_quantity}}</h3>
+                        <p>{{cart.pet_price | currency: '₱'}}</p>
+                    </div>
+                    <div class="cart-control"></div>
+                </div>
+
+                <button routerLink="/cart">Checkout Items</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</mat-sidenav-container>

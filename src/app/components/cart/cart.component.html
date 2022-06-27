@@ -1,0 +1,121 @@
+<mat-sidenav-container autosize>
+
+  <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()">
+    <div class="user-profile">
+      <img src="./assets/visual/logo.png">
+    </div>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout">
+      <mat-icon style="margin-right: 10%; margin-left: 10%;">pets</mat-icon> Checkout Items
+    </button>
+
+
+  </mat-sidenav>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="example-icon" (click)="isExpanded = !isExpanded"
+        aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
+        <mat-icon style="color: #424242;" *ngIf="!isExpanded">menu</mat-icon>
+        <mat-icon style="color: #424242;" *ngIf="isExpanded">menu</mat-icon>
+      </button>
+      <h1 style="color: #424242; font-size: 16px;"></h1>
+
+      <span class="example-spacer"></span>
+
+      <div class="user__name">
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu">Lawrenz Sese Diestro
+          <mat-icon>arrow_drop_down</mat-icon> </span>
+      </div>
+
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Account Information</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>favorite</mat-icon>
+          <span> View Favorites</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="container">
+      <div class="title">
+        <h3>Cart Items</h3>
+      </div>
+
+      <div class="cart-container">
+        <div class="cart-items" *ngIf="cart == null"
+          style="display: flex; justify-content: center; align-items: center;">
+          <img src="./assets/visual/empty.png" alt="" style="width: 60%">
+        </div>
+        <div class="cart-items" *ngIf="cart != null">
+          <div class="cart-card" *ngFor="let cart of cart">
+            <div class="cart-image">
+              <img src="{{cart.pet_img}}" alt="">
+            </div>
+            <div class="cart-info">
+              <h3>{{cart.pet_breed}} ({{cart.pet_price | currency: 'P'}})</h3>
+              <h4>{{cart.total | currency: 'P'}} | Qty: {{cart.pet_quantity}}</h4>
+
+              <mat-icon class="remove" title="Remove Cart Items" (click)="deleteCart(cart.cart_id)">cancel</mat-icon>
+            </div>
+          </div>
+        </div>
+        <div class="cart-checkout">
+          <h3>Receiver's Information</h3>
+
+          <div class="checkout-forms">
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Name" value="{{name}}" [(ngModel)]="name" [disabled]="isDisabled">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Address</mat-label>
+              <input matInput placeholder="Address" value="{{address}}" [(ngModel)]="address" [disabled]="isDisabled">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Contact</mat-label>
+              <input matInput placeholder="Contact" value="{{contact}}" [(ngModel)]="contact" [disabled]="isDisabled">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" value="{{email}}" [(ngModel)]="email" [disabled]="isDisabled">
+            </mat-form-field>
+
+            <div class="checkout-control">
+              <div>
+                <h3>Total: {{totalamount | currency: 'P'}} | {{totalquant}} Items</h3>
+              </div>
+              <div>
+                <button (click)="enabled()" *ngIf="isDisabled == true" style="margin-right: 10px">Edit Information</button>
+                <button (click)="disabled()" *ngIf="isDisabled == false" style="background-color: #F2645C; margin-right: 10px">Cancel</button>
+                <button (click)="checkout()">Checkout All Items</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</mat-sidenav-container>

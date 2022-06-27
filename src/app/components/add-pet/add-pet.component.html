@@ -1,0 +1,207 @@
+<mat-sidenav-container autosize>
+
+  <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()">
+    <div class="user-profile">
+      <img src="./assets/visual/logo.png">
+    </div>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+    </button>
+
+
+  </mat-sidenav>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="example-icon" (click)="isExpanded = !isExpanded"
+        aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
+        <mat-icon style="color: #424242;" *ngIf="!isExpanded">menu</mat-icon>
+        <mat-icon style="color: #424242;" *ngIf="isExpanded">menu</mat-icon>
+      </button>
+      <h1 style="color: #424242; font-size: 16px;"></h1>
+
+      <span class="example-spacer"></span>
+
+      <div class="user__name">
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu">Lawrenz Sese Diestro
+          <mat-icon>arrow_drop_down</mat-icon> </span>
+      </div>
+
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Account Information</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>favorite</mat-icon>
+          <span> View Favorites</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="container">
+      <div class="title">
+        <h3>Pet Panel</h3>
+      </div>
+
+      <div class="button-add">
+        <button (click)="addPet()">Add Pet</button>
+      </div>
+
+      <div class="pet-container">
+        <div class="pet-card" *ngFor = "let pets of pets">
+            <div class="pet-img">
+                <img src="{{pets.pet_img}}" alt="">
+                <div class="pet-name">
+                    <h3>{{pets.pet_breed}}</h3>
+                    <span>{{pets.pet_price | currency: 'P'}}</span>
+                </div>
+            </div>
+            <div class="pet-control">
+                <div class="dots">
+                    <mat-icon title="View Pet">visibility</mat-icon>
+                </div>
+                <div class="dots">
+                    <mat-icon (click)="editPet(pets)" title="Edit Pet">edit_note</mat-icon>
+                </div>
+                <div class="dots">
+                    <mat-icon (click)="deletePet(pets.pet_id)" title="Delete Pet">delete</mat-icon>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</mat-sidenav-container>
+
+<ng-template #AddPet>
+  <h4 class="titles" mat-dialog-title style="display: flex; align-items: center;">
+    Add New Pet
+  </h4>
+  <mat-divider></mat-divider>
+
+  <div class="form">
+    <div class="pictures">
+
+      <div class="image-container">
+        <input id="file-input" type="file" (change)="onUploadHandler($event)" class="image-uploader"
+          style="display:none;">
+        <label for="file-input">
+          <img [src]="imgSrc" alt="">
+          <div class="dot">
+            <mat-icon>add_circle</mat-icon>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="forms">
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Pet Breed</mat-label>
+        <input matInput [(ngModel)]="pet_breed">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Quantity</mat-label>
+        <input type="number" matInput [(ngModel)]="quantity">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Pet Price</mat-label>
+        <input matInput type="number" [(ngModel)]="pet_price">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="pet_category">
+          <mat-option value="Dog">Dog</mat-option>
+          <mat-option value="Cat">Cat</mat-option>
+          <mat-option value="Bird">Bird</mat-option>
+          <mat-option value="Fish">Fish</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 92%;">
+        <mat-label>Pet Description</mat-label>
+        <input matInput type="text" [(ngModel)]="pet_description">
+      </mat-form-field>
+
+      <div class="btn-actions">
+        <button (click)="closeModal()" class="add" style="width: auto; background-color: red; margin-right: 5px;">Cancel</button>
+        <button (click)="addPets()" class="add">Add Pet</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #EditPet>
+  <h4 class="titles" mat-dialog-title style="display: flex; align-items: center;">
+    Edit {{petBreed}}
+  </h4>
+  <mat-divider></mat-divider>
+
+  <div class="form">
+    <div class="pictures">
+
+      <div class="image-container">
+        <input id="file-input" type="file" (change)="onUploadHandler($event)" class="image-uploader"
+          style="display:none;">
+        <label for="file-input">
+          <img [src]="imgSrc" alt="">
+          <div class="dot">
+            <mat-icon>add_circle</mat-icon>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="forms">
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Pet Breed</mat-label>
+        <input matInput [(ngModel)]="pet_breeds">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Quantity</mat-label>
+        <input matInput [(ngModel)]="quantitys">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Pet Price</mat-label>
+        <input matInput type="number" [(ngModel)]="pet_prices">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill" style="width: 45%;">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="pet_categorys">
+          <mat-option value="Dog">Dog</mat-option>
+          <mat-option value="Cat">Cat</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 92%;">
+        <mat-label>Pet Description</mat-label>
+        <input matInput type="text" [(ngModel)]="pet_descriptions">
+      </mat-form-field>
+
+      <div class="btn-actions">
+        <button (click)="closeModal()" class="add" style="width: auto; background-color: red; margin-right: 5px;">Cancel</button>
+        <button (click)="updatePets()" class="add" style="width: auto;">Update Pet</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,126 @@
+<mat-sidenav-container autosize>
+
+  <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()">
+    <div class="user-profile">
+      <img src="./assets/visual/logo.png">
+    </div>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+    </button>
+    
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout">
+      <mat-icon style="margin-right: 10%; margin-left: 10%;">pets</mat-icon> Checkout Items
+    </button>
+
+
+  </mat-sidenav>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="example-icon" (click)="isExpanded = !isExpanded"
+        aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
+        <mat-icon style="color: #424242;" *ngIf="!isExpanded">menu</mat-icon>
+        <mat-icon style="color: #424242;" *ngIf="isExpanded">menu</mat-icon>
+      </button>
+      <h1 style="color: #424242; font-size: 16px;"></h1>
+
+      <span class="example-spacer"></span>
+
+      <div class="user__name">
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu">Lawrenz Sese Diestro
+          <mat-icon>arrow_drop_down</mat-icon> </span>
+      </div>
+
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Account Information</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>favorite</mat-icon>
+          <span> View Favorites</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="container">
+      <div class="title">
+        <h3>Pet List</h3>
+      </div>
+
+      <div class="sorter">
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip>All</mat-chip>
+          <mat-chip>Dog</mat-chip>
+          <mat-chip>Cat</mat-chip>
+          <mat-chip>Fish</mat-chip>
+          <mat-chip>Bird</mat-chip>
+        </mat-chip-list>
+      </div>
+
+      <div class="pet-container">
+        <div class="pet-card" *ngFor="let pets of pets">
+          <div class="pet-image">
+            <img src="{{pets.pet_img}}" alt="">
+            <mat-icon class="favorite" title="Add to your Favorites">favorite</mat-icon>
+            <!-- <mat-icon class="favorite" title="Remove from Favorites" *ngIf="favorite == 1" style="color: red">favorite
+            </mat-icon> -->
+            <div class="badge">
+              <p *ngIf="pets.quantity > 1">Available</p>
+            </div>
+          </div>
+          <div class="pet-info">
+            <h3>{{pets.pet_breed}}</h3>
+            <h4>{{pets.pet_price | currency: '₱'}} | {{pets.quantity}} Available.</h4>
+            <button *ngIf="pets.quantity < 1" disabled style="background-color:#424242">Sold</button>
+            <button *ngIf="pets.quantity > 1" (click)="openBuy(pets)">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</mat-sidenav-container>
+
+<ng-template #BuyItem>
+  <div class="buy-container">
+    <div class="buy-image">
+      <img src="{{image}}" alt="">
+    </div>
+    <div class="buy-info">
+      <h3>{{breed}}</h3>
+      <h4>{{price | currency: '₱'}}</h4>
+
+      <p>{{description}}</p>
+    </div>
+    <div class="buy-control">
+      <div class="quant-control">
+        <div>
+          <button (click)="counter('minus')" *ngIf="count <= 0" disabled>-</button>
+          <button (click)="counter('minus')" *ngIf="count >= 1">-</button>
+          <p>{{count}}</p>
+          <button (click)="counter('add')"  *ngIf="count >= quantity" disabled>+</button>
+          <button (click)="counter('add')"  *ngIf="count < quantity">+</button>
+        </div>
+        <div>
+          <h3> Total : {{total | currency: '₱'}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="buy-btn">
+      <button (click)="addCart()">Add to Cart</button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,108 @@
+.container {
+    display: flex;
+    flex-direction: row;
+
+    .container__picture {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 70%;
+        }
+    }
+
+    .container__forms {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        .forms {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+
+            mat-form-field {
+                font-size: 14px;
+                font-weight: 500;
+                position: relative;
+            }
+
+            mat-icon {
+                position: absolute;
+                top:7px;
+                color: #00b894;
+            }
+
+            input {
+                margin-left: 30px;
+            }
+
+            mat-checkbox {
+                font-size: .8rem;
+            }
+
+            button {
+                width: 100%;
+                margin: auto;
+                padding: 9px;
+                border: none;
+                border-radius: 5px;
+                background-color: #00b894;
+                color: #f9f9f9;
+                font-size: 1rem;
+                font-weight: 500;
+            }
+
+            button:hover {
+                background-color: #00cec9;
+            }
+
+            span {
+                font-size: .8rem;
+                cursor: pointer;
+                color: #00b894;
+                margin-top: 5px;
+            }
+
+            span:hover {
+                text-decoration: underline;
+            }
+            
+        }
+
+
+    }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #cdcdcd !important;
+    // opacity: 1!important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #00cec9 !important;
+}
+
+
+@media only screen and (max-width:480px) {
+    .container {
+        justify-content: center;
+        .container__forms {
+            width: 90%;
+
+            .forms {
+                width: 100%;
+            }
+        }
+    
+        .container__picture {
+            display: none;
+        }
+    }
+}
