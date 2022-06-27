@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("user_address", res.payload.user_address);
         localStorage.setItem("user_email", res.payload.user_email);
         localStorage.setItem("user_id", res.payload.user_id);
+        localStorage.setItem("isAdmin", res.payload.isAdmin);
         alert('Login Successfully')
         this.route.navigate(["/dashboard"]);
       }

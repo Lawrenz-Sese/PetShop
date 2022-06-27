@@ -24,6 +24,9 @@ export class AddPetComponent implements OnInit {
     this.pullPets();
   }
 
+  isAdmin = localStorage.getItem('isAdmin');
+  user_name = localStorage.getItem("user_name");
+
   @ViewChild('AddPet', { static: true }) AddPet: TemplateRef<any>;
   @ViewChild('EditPet', { static: true }) EditPet: TemplateRef<any>;
 

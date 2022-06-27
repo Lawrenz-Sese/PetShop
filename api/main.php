@@ -66,6 +66,16 @@
 					echo json_encode($get->pullCheckout($d), JSON_PRETTY_PRINT);
 				break;
 
+				case 'orders':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($get->pullOrders($d), JSON_PRETTY_PRINT);
+				break;
+
+				case 'checkoutDetails':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($get->pullCheckoutDetails($d), JSON_PRETTY_PRINT);
+				break;
+
 				case 'cart':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($get->pullCart($d), JSON_PRETTY_PRINT);

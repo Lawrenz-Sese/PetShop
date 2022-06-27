@@ -10,11 +10,11 @@
       <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
     </button>
 
-    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet" *ngIf="isAdmin == '1'">
       <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
     </button>
 
-    <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout">
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout" *ngIf="isAdmin == '0'">
       <mat-icon style="margin-right: 10%; margin-left: 10%;">pets</mat-icon> Checkout Items
     </button>
 
@@ -33,7 +33,7 @@
       <span class="example-spacer"></span>
 
       <div class="user__name">
-        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu">Lawrenz Sese Diestro
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu"> {{user_name}}
           <mat-icon>arrow_drop_down</mat-icon> </span>
       </div>
 

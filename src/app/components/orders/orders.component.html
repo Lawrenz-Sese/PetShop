@@ -1,0 +1,142 @@
+<mat-sidenav-container autosize>
+
+  <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()">
+    <div class="user-profile">
+      <img src="./assets/visual/logo.png">
+    </div>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/orders" *ngIf="isAdmin == '1'">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Orders Panel
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/transactions" *ngIf="isAdmin == '1'">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Transactions
+    </button>
+
+
+  </mat-sidenav>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <mat-toolbar class="toolbar">
+      <button mat-icon-button class="example-icon" (click)="isExpanded = !isExpanded"
+        aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
+        <mat-icon style="color: #424242;" *ngIf="!isExpanded">menu</mat-icon>
+        <mat-icon style="color: #424242;" *ngIf="isExpanded">menu</mat-icon>
+      </button>
+      <h1 style="color: #424242; font-size: 16px;"></h1>
+
+      <span class="example-spacer"></span>
+
+      <div class="user__name">
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu"> {{user_name}}
+          <mat-icon>arrow_drop_down</mat-icon> </span>
+      </div>
+
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Account Information</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>favorite</mat-icon>
+          <span> View Favorites</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="container">
+      <div class="title">
+        <h3>Orders Panel</h3>
+      </div>
+
+      <div class="orders-container">
+        <table mat-table [dataSource]="dataSource" class="tables" style="background-color:rgba(0, 0, 0, 0);">
+  
+  
+            <ng-container matColumnDef="Customer">
+              <th mat-header-cell *matHeaderCellDef  class="mobile-label"> Customers Name </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.user_name}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Contact">
+              <th mat-header-cell *matHeaderCellDef  class="mobile-label"> Contact Number </th>
+              <td mat-cell *matCellDef="let element"> {{element.user_contact}}
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Address">
+              <th mat-header-cell *matHeaderCellDef  class="mobile-label"> Address </th>
+              <td mat-cell *matCellDef="let element"> {{element.user_address}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Code">
+              <th mat-header-cell *matHeaderCellDef  class="mobile-label"> Orders Code </th>
+              <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Total">
+              <th mat-header-cell *matHeaderCellDef  class="mobile-label"> Total </th>
+              <td mat-cell *matCellDef="let element"> {{element.total | currency: 'P'}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef  class="mobile-label"> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.dateAdded | date}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element">
+                <button class="viewBtnss" style="margin-right: 10px; color: #f9f9f9; background-color: #009793;"
+                  mat-raised-button>
+                  <mat-icon (click)="openView(element.code)">visibility</mat-icon>
+  
+                </button>
+  
+              </td>
+            </ng-container>
+  
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+      </div>
+    </div>
+
+  </div>
+</mat-sidenav-container>
+
+<ng-template #ViewOrders>
+    <div class="cart-items">
+      <div class="cart-card" *ngFor="let checkoutDetails of checkoutDetails">
+        <div class="cart-image">
+          <img src="{{checkoutDetails.pet_image}}" alt="">
+        </div>
+        <div class="cart-info">
+          <h3>{{checkoutDetails.pet_breed}} ({{checkoutDetails.pet_price | currency: 'P'}})</h3>
+          <h4>{{checkoutDetails.pet_total | currency: 'P'}} | Qty: {{checkoutDetails.pet_quantity}}</h4>
+  
+        </div>
+      </div>
+    </div>
+
+    <div class="control">
+        <button>Deny</button>
+        <button>Accept</button>
+    </div>
+  </ng-template>

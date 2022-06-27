@@ -92,6 +92,46 @@ class Get{
     
     }
 
+    public function pullOrders($d)
+    {
+    
+        $sql = "SELECT * FROM tbl_checkout WHERE isApproved = '0'";
+    
+        
+        $res = $this->gm->generalQuery($sql, "No records found");
+        if ($res['code'] == 200) {
+            $payload = $res['data'];
+            $remarks = "success";
+            $message = "Successfully retrieved requested data";
+        } else {
+            $payload = null;
+            $remarks = "failed";
+            $message = $res['errmsg'];
+        }
+        return $this->gm->sendPayload($payload, $remarks, $message, $res['code']);
+    
+    }
+
+    public function pullCheckoutDetails($d)
+    {
+    
+        $sql = "SELECT * FROM tbl_checkitems WHERE code = '$d->code'";
+    
+        
+        $res = $this->gm->generalQuery($sql, "No records found");
+        if ($res['code'] == 200) {
+            $payload = $res['data'];
+            $remarks = "success";
+            $message = "Successfully retrieved requested data";
+        } else {
+            $payload = null;
+            $remarks = "failed";
+            $message = $res['errmsg'];
+        }
+        return $this->gm->sendPayload($payload, $remarks, $message, $res['code']);
+    
+    }
+
     
 
     

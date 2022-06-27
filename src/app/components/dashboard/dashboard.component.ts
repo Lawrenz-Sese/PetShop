@@ -25,6 +25,9 @@ export class DashboardComponent implements OnInit {
     this.pullCart();
   }
 
+  isAdmin = localStorage.getItem("isAdmin");
+  user_name = localStorage.getItem("user_name");
+
   pets: any;
   userInfo: any = {};
   pullPets() {

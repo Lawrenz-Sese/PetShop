@@ -28,6 +28,9 @@ export class CartComponent implements OnInit {
     this.getQuant();
   }
 
+  isAdmin = localStorage.getItem("isAdmin");
+  user_name = localStorage.getItem("user_name");
+
   userInfo: any = {};
   cart: any;
   cartCounter = 0;
@@ -128,10 +131,16 @@ export class CartComponent implements OnInit {
     this.checkoutInfo.total = this.totalamount;
     this.checkoutInfo.quantity = this.totalquant;
 
-
-    this.ds.sendRequest("addCheckout", this.checkoutInfo).subscribe((res) => {
-      alert('Items Checkout');
-    });
+    Swal.fire({
+      title: 'Checkout all items?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
 
     for (let i = 0; i < this.cart.length; i++) {
       this.cartInfo.cart_id = this.cart[i].cart_id;
@@ -147,55 +156,64 @@ export class CartComponent implements OnInit {
       });
 
       this.ds.sendRequest("deleteCart", this.cartInfo).subscribe((res) => {
-        this.pullCart();
-        this.route.navigate(['/checkout'])
+
       });
 
 
     }
+
+    this.ds.sendRequest("addCheckout", this.checkoutInfo).subscribe((res) => {
+      this.route.navigate(['/checkout'])
+    });
+    Swal.fire(
+      'All Items Checkout!',
+      'success'
+    )
+  }
+    })
   }
 
-  showFiller = false;
-  sidenav!: MatSidenav;
-  isExpanded = true;
-  showSubmenu: boolean = false;
-  isShowing = false;
-  showSubSubMenu: boolean = false;
+showFiller = false;
+sidenav!: MatSidenav;
+isExpanded = true;
+showSubmenu: boolean = false;
+isShowing = false;
+showSubSubMenu: boolean = false;
 
-  mouseenter() {
-    if (!this.isExpanded) {
-      this.isShowing = true;
-    }
+mouseenter() {
+  if (!this.isExpanded) {
+    this.isShowing = true;
   }
+}
 
-  mouseleave() {
-    if (!this.isExpanded) {
-      this.isShowing = false;
-    }
+mouseleave() {
+  if (!this.isExpanded) {
+    this.isShowing = false;
   }
+}
 
-  isLargeScreen() {
-    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    if (width > 769) {
-      return true;
-    } else {
-      return false;
-    }
+isLargeScreen() {
+  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if (width > 769) {
+    return true;
+  } else {
+    return false;
   }
+}
 
-  logOut() {
-    localStorage.clear();
-    this.route.navigate(['']);
-  }
+logOut() {
+  localStorage.clear();
+  this.route.navigate(['']);
+}
 
-  isDisabled: boolean = true;
-  enabled() {
-    this.isDisabled = false
-  }
+isDisabled: boolean = true;
+enabled() {
+  this.isDisabled = false
+}
 
-  disabled() {
-    this.isDisabled = true;
-  }
+disabled() {
+  this.isDisabled = true;
+}
 
 
 }

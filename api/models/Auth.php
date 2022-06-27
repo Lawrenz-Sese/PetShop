@@ -92,13 +92,14 @@ header("Access-Control-Allow-Origin: *");
 					$user_contact = $res['data'][0]['user_contact'];
 					$user_address = $res['data'][0]['user_address'];
 					$user_email = $res['data'][0]['user_email'];
+					$isAdmin = $res['data'][0]['isAdmin'];
 		
 				
 
 					$code = 200;
 					$remarks = "success";
 					$message = "Logged in successfully";
-					$payload = array("user_id"=>$user_id,"user_address"=>$user_address, "user_name"=>$user_name, "user_contact"=>$user_contact,  "user_email"=>$user_email);
+					$payload = array("user_id"=>$user_id,"user_address"=>$user_address, "user_name"=>$user_name, "user_contact"=>$user_contact,  "user_email"=>$user_email, "isAdmin"=>$isAdmin);
 				} else {
 					$payload = null; 
 					$remarks = "failed"; 

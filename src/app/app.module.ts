@@ -38,7 +38,8 @@ import Swal from 'sweetalert2';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PetListComponent } from './components/pet-list/pet-list.component';
 import { CartComponent } from './components/cart/cart.component';
-import { CheckoutComponent } from './components/checkout/checkout.component'
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrdersComponent } from './components/orders/orders.component'
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component'
     DashboardComponent,
     PetListComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

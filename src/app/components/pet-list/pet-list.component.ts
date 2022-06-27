@@ -24,6 +24,9 @@ export class PetListComponent implements OnInit {
     this.pullPets();
   }
 
+  isAdmin = localStorage.getItem("isAdmin");
+  user_name = localStorage.getItem("user_name");
+
   @ViewChild('BuyItem', { static: true }) BuyItem: TemplateRef<any>;
 
   pet: any;
@@ -63,7 +66,15 @@ export class PetListComponent implements OnInit {
     console.log(this.cartInfo)
 
     this.ds.sendRequest("addCart", this.cartInfo).subscribe((res) => {
-      alert('Okay')
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Added to Cart',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this.count = 0;
+      this.dialog.closeAll();
     });
 
   }

@@ -6,14 +6,14 @@ import { map } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from "src/app/service/data.service";
 import Swal from 'sweetalert2'
-
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  selector: 'app-orders',
+  templateUrl: './orders.component.html',
+  styleUrls: ['./orders.component.scss']
 })
-export class CheckoutComponent implements OnInit {
+export class OrdersComponent implements OnInit {
 
   constructor(
     public route: Router,
@@ -22,13 +22,24 @@ export class CheckoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pullCheckout();
+    this.pullOrders()
+  }
+
+  orders: any;
+  pullOrders() {
+    this.ds.sendRequest("orders", null).subscribe((res) => {
+      this.orders = res.payload;
+      this.dataSource.data = this.orders;
+
+      console.log(this.orders)
+    });
   }
 
   @ViewChild('ViewOrders', { static: true }) ViewOrders: TemplateRef<any>;
 
   code: any;
   checkoutDetails: any = {};
+  checkoutInfo: any ={};
   openView(e) {
     this.dialog.open(this.ViewOrders);
 
@@ -44,17 +55,6 @@ export class CheckoutComponent implements OnInit {
 
   isAdmin = localStorage.getItem("isAdmin");
   user_name = localStorage.getItem("user_name");
-  
-  checkout: any;
-  checkoutInfo: any = {};
-  pullCheckout() {
-    this.checkoutInfo.user_id = localStorage.getItem('user_id');
-    this.ds.sendRequest("checkout", this.checkoutInfo).subscribe((res) => {
-      this.checkout = res.payload;
-
-      console.log(this.checkout)
-    });
-  }
 
   showFiller = false;
   sidenav!: MatSidenav;
@@ -90,4 +90,29 @@ export class CheckoutComponent implements OnInit {
   }
 
 
+  checkoutInfos: Orders[] = [];
+
+
+  displayedColumns: string[] = [
+    'Customer',
+    'Contact',
+    'Address',
+    'Code',
+    'Total',
+    'Date',
+    'Action'
+    
+  ];
+  dataSource = new MatTableDataSource(this.checkoutInfos);
+
+}
+
+export interface Orders {
+  Customer: any;
+  Contact: any;
+  Address: any;
+  Code: any;
+  Total: any;
+  Status: any;
+  Date: any;
 }
