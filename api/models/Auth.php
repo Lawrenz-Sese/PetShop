@@ -1,5 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
 	class Auth {
 		protected $gm;
 
@@ -48,14 +51,14 @@ header("Access-Control-Allow-Origin: *");
                 'user_password'=>$this->encrypt_password($dt->user_password)
             );
 
-            $sql = "INSERT INTO tbl_user(user_name, user_address, user_contact, user_email,user_password) 
-                           VALUES ('$dt->user_name','$dt->user_address','$dt->user_contact', '$dt->user_email','$encryptedPassword')";
+            $sql = "INSERT INTO tbl_user(user_name, user_address, user_contact, user_email,user_password, user_otp) 
+                           VALUES ('$dt->user_name','$dt->user_address','$dt->user_contact', '$dt->user_email','$encryptedPassword', '$dt->user_otp')";
                      
 
                            $data = array(); $code = 0; $errmsg= ""; $remarks = "";
                            try {
                        
-                               if ($res = $this->pdo->query($sql)->fetchAll()) {
+                               if ($res = $this->pdo->query($sql)) {
                                    foreach ($res as $rec) { array_push($data, $rec);}
                                    $res = null; 
 								   $code = 200; $message = "Successfully Registered"; $remarks = "success";
@@ -67,6 +70,73 @@ header("Access-Control-Allow-Origin: *");
                            }
 						   return $this->gm->sendPayload($payload, $remarks, $message, $code);                
         }
+
+
+
+		public function userEmailVerification($d)
+		{
+		
+			$receiver = $d->user_email;
+			$subj = 'APP NAME - OTP ';
+			$content = "CODE - $d->user_otp";
+
+			$mail = new PHPMailer(true);
+
+			try {
+				//Server settings
+				// $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+				$mail->isSMTP();                                             //Send using SMTP
+				$mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+				$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+				$mail->Username   = 'chrisjohn.ifl@gmail.com';                  //SMTP username
+				$mail->Password   = 'nrogvyyzestasaas';                               //SMTP password
+				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+				$mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+				//Recipients
+				$mail->setFrom('sampleEmail@gmail.com', 'App Name');
+				$mail->addAddress($receiver);     //Add a recipient
+				$mail->addReplyTo('sampleEmail@gmail.com', 'App Name');
+
+				//Content
+				$mail->isHTML(true);                                  //Set email format to HTML
+				$mail->Subject = $subj ;
+				$mail->Body    = $content;
+				$mail->AltBody =  $content;
+
+				if($mail->send()){
+					return array("code"=>200, "remarks"=>"success", "message"=>"Message has been sent");
+				}
+				
+			} catch (Exception $e) {
+				return array("error"=>"Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+			}
+		}
+
+		public function verifyUserCode($d)
+		{
+		
+			$sql = "SELECT * FROM tbl_user WHERE user_email='$d->user_email' AND user_otp = '$d->otpCode' LIMIT 1";
+			$res = $this->gm->generalQuery($sql, "Incorrect username or password");
+			if($res['code'] == 200) {
+
+				$updateSql = "UPDATE tbl_user SET isVerified = 1, isActive = 1 WHERE user_email= '$d->user_email' AND user_otp = '$d->otpCode'";
+				$this->pdo->query($updateSql);
+
+					$code = 200;
+					$remarks = "success";
+					$message = "Verification Success!";
+					$payload = null;
+				} else {
+					$payload = null; 
+					$remarks = "failed"; 
+					$message = "Incorrect Code";
+				}
+			
+			return $this->gm->sendPayload($payload, $remarks, $message, $code);
+
+
+		}
 
 
 
@@ -150,7 +220,7 @@ header("Access-Control-Allow-Origin: *");
 			}
 			return $this->gm->sendPayload($payload, $remarks, $message, $code);
 		}
-
+	
 
     }
     ?>

@@ -20,7 +20,20 @@
 		case 'POST':
 
 			switch($req[0]) {
+
 				
+				case 'userEmailVerification':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($auth->userEmailVerification($d), JSON_PRETTY_PRINT);
+				break;
+
+				
+
+				case 'verifyUserCode':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($auth->verifyUserCode($d), JSON_PRETTY_PRINT);
+				break;
+
 				case 'regUser':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($auth->regUser($d), JSON_PRETTY_PRINT);
