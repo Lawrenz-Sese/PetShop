@@ -153,6 +153,24 @@ public function updatePets($d)
     return $this->gm->sendPayload($payload, $remarks, $message, $code);
 }
 
+public function approveOrder($d)
+{
+    $payload = null;
+    $remarks = "failed";
+    $message = "Unable to retrieve data";
+    $sql = "UPDATE tbl_checkout SET isApproved = '$d->isApproved' WHERE code = '$d->code'";
+
+    $res = $this->gm->generalQuery($sql, "Failed");
+
+    if ($res['code'] != 200) {
+        $code = 200;
+        $payload = $res;
+        $remarks = "success";
+        $message = "Successfully added to the database";
+    }
+    return $this->gm->sendPayload($payload, $remarks, $message, $code);
+}
+
 public function deleteCart($d)
 {
     $payload = null;

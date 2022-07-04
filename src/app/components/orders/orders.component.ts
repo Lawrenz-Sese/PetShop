@@ -53,6 +53,25 @@ export class OrdersComponent implements OnInit {
 
   }
 
+  orderInfo: any = {};
+  approveOrder(checkoutDetails) {
+    this.orderInfo.code = checkoutDetails[0].code;
+    this.orderInfo.isApproved = 1;
+
+    this.ds.sendRequest("approveOrder", this.orderInfo).subscribe((res) => {});
+
+    console.log(this.orderInfo)
+  }
+
+  declineOrder(checkoutDetails) {
+    this.orderInfo.code = checkoutDetails[0].code;
+    this.orderInfo.isApproved = 2;
+
+    this.ds.sendRequest("approveOrder", this.orderInfo).subscribe((res) => {});
+
+    console.log(this.orderInfo)
+  }
+
   isAdmin = localStorage.getItem("isAdmin");
   user_name = localStorage.getItem("user_name");
 

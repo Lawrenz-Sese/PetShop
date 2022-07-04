@@ -70,7 +70,8 @@
             <h4>Checkout Date: {{checkout.dateAdded | date}}</h4>
             <span>Status:
               <span *ngIf="checkout.isApproved === 0" style="color: orangered;">Pending</span>
-              <span *ngIf="checkout.isApproved === 1" style="color: blue;">For Processing</span>
+              <span *ngIf="checkout.isApproved === 1" style="color: blue;">Order Apporoved</span>
+              <span *ngIf="checkout.isApproved === 2" style="color: red;">Order Deny</span>
               <span *ngIf="checkout.isApproved === 3" style="color: green;">For Delivery</span>
             </span>
           </div>

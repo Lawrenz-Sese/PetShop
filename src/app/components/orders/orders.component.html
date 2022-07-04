@@ -136,7 +136,7 @@
     </div>
 
     <div class="control">
-        <button>Deny</button>
-        <button>Accept</button>
+        <button (click)="declineOrder(checkoutDetails)">Deny</button>
+        <button (click)="approveOrder(checkoutDetails)">Approve</button>
     </div>
   </ng-template>

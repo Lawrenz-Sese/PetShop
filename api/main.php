@@ -114,6 +114,11 @@
 					echo json_encode($post->updatePets($d), JSON_PRETTY_PRINT);
 				break;
 
+				case 'approveOrder':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($post->approveOrder($d), JSON_PRETTY_PRINT);
+				break;
+
 				
 
 			}
