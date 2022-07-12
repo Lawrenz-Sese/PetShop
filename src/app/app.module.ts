@@ -39,7 +39,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PetListComponent } from './components/pet-list/pet-list.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { OrdersComponent } from './components/orders/orders.component'
+import { OrdersComponent } from './components/orders/orders.component';
+import { ProfileComponent } from './components/profile/profile.component'
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { OrdersComponent } from './components/orders/orders.component'
     PetListComponent,
     CartComponent,
     CheckoutComponent,
-    OrdersComponent
+    OrdersComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -142,78 +142,114 @@ export class CartComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-    for (let i = 0; i < this.cart.length; i++) {
-      this.cartInfo.cart_id = this.cart[i].cart_id;
-      this.checkoutDetails.code = this.code = seq;
-      this.checkoutDetails.pet_breed = this.cart[i].pet_breed;
-      this.checkoutDetails.pet_image = this.cart[i].pet_img;
-      this.checkoutDetails.pet_price = this.cart[i].pet_price;
-      this.checkoutDetails.pet_total = this.cart[i].total;
-      this.checkoutDetails.pet_quantity = this.cart[i].pet_quantity;
+        for (let i = 0; i < this.cart.length; i++) {
+          this.cartInfo.cart_id = this.cart[i].cart_id;
+          this.checkoutDetails.code = this.code = seq;
+          this.checkoutDetails.pet_breed = this.cart[i].pet_breed;
+          this.checkoutDetails.pet_image = this.cart[i].pet_img;
+          this.checkoutDetails.pet_price = this.cart[i].pet_price;
+          this.checkoutDetails.pet_total = this.cart[i].total;
+          this.checkoutDetails.pet_quantity = this.cart[i].pet_quantity;
 
-      this.ds.sendRequest("addCheckoutDetails", this.checkoutDetails).subscribe((res) => {
+          this.ds.sendRequest("addCheckoutDetails", this.checkoutDetails).subscribe((res) => {
 
-      });
+          });
 
-      this.ds.sendRequest("deleteCart", this.cartInfo).subscribe((res) => {
+          this.ds.sendRequest("deleteCart", this.cartInfo).subscribe((res) => {
 
-      });
+          });
 
 
-    }
+        }
 
-    this.ds.sendRequest("addCheckout", this.checkoutInfo).subscribe((res) => {
-      this.route.navigate(['/checkout'])
-    });
-    Swal.fire(
-      'All Items Checkout!',
-      'success'
-    )
-  }
+        this.ds.sendRequest("addCheckout", this.checkoutInfo).subscribe((res) => {
+          this.route.navigate(['/checkout'])
+        });
+        Swal.fire(
+          'All Items Checkout!',
+          'success'
+        )
+      }
     })
   }
+  checkoutsoloInfo : any ={};
+  checkoutSolo(cart) {
+    this.checkoutsoloInfo.user_id = localStorage.getItem('user_id')
+    this.checkoutsoloInfo.user_name = this.name;
+    this.checkoutsoloInfo.user_address = this.address;
+    this.checkoutsoloInfo.user_contact = this.contact;
+    this.checkoutsoloInfo.user_email = this.email;
 
-showFiller = false;
-sidenav!: MatSidenav;
-isExpanded = true;
-showSubmenu: boolean = false;
-isShowing = false;
-showSubSubMenu: boolean = false;
+    var seq = (Math.floor(100000000 + Math.random() * 900000000)).toString().substring(1);
+    this.checkoutsoloInfo.code = this.code = seq;
 
-mouseenter() {
-  if (!this.isExpanded) {
-    this.isShowing = true;
+    this.checkoutsoloInfo.total = this.totalamount;
+    this.checkoutsoloInfo.quantity = this.totalquant;
+
+    this.cartInfo.cart_id = cart.cart_id;
+    this.checkoutDetails.code = this.code = seq;
+    this.checkoutDetails.pet_breed = cart.pet_breed;
+    this.checkoutDetails.pet_image = cart.pet_img;
+    this.checkoutDetails.pet_price = cart.pet_price;
+    this.checkoutDetails.pet_total = cart.total;
+    this.checkoutDetails.pet_quantity = cart.pet_quantity;
+
+    this.ds.sendRequest("addCheckout", this.checkoutsoloInfo).subscribe((res) => {
+
+    });
+
+    this.ds.sendRequest("addCheckoutDetails", this.checkoutDetails).subscribe((res) => {
+
+    });
+
+    this.ds.sendRequest("deleteCart", this.cartInfo).subscribe((res) => {
+      this.route.navigate(['/checkout'])
+    });
+
+    console.log(this.cartInfo)
   }
-}
 
-mouseleave() {
-  if (!this.isExpanded) {
-    this.isShowing = false;
+  showFiller = false;
+  sidenav!: MatSidenav;
+  isExpanded = true;
+  showSubmenu: boolean = false;
+  isShowing = false;
+  showSubSubMenu: boolean = false;
+
+  mouseenter() {
+    if (!this.isExpanded) {
+      this.isShowing = true;
+    }
   }
-}
 
-isLargeScreen() {
-  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  if (width > 769) {
-    return true;
-  } else {
-    return false;
+  mouseleave() {
+    if (!this.isExpanded) {
+      this.isShowing = false;
+    }
   }
-}
 
-logOut() {
-  localStorage.clear();
-  this.route.navigate(['']);
-}
+  isLargeScreen() {
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (width > 769) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-isDisabled: boolean = true;
-enabled() {
-  this.isDisabled = false
-}
+  logOut() {
+    localStorage.clear();
+    this.route.navigate(['']);
+  }
 
-disabled() {
-  this.isDisabled = true;
-}
+  isDisabled: boolean = true;
+  enabled() {
+    this.isDisabled = false
+  }
+
+  disabled() {
+    this.isDisabled = true;
+  }
 
 
 }

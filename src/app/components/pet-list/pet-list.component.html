@@ -3,7 +3,7 @@
   <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
     (mouseleave)="mouseleave()">
     <div class="user-profile">
-      <img src="./assets/visual/logo.png">
+      <img src="./assets/visual/benef-logo.jpg">
     </div>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
@@ -56,16 +56,14 @@
 
     <div class="container">
       <div class="title">
-        <h3>Pet List</h3>
+        <h3>Product List</h3>
       </div>
 
       <div class="sorter">
         <mat-chip-list aria-label="Fish selection">
           <mat-chip>All</mat-chip>
-          <mat-chip>Dog</mat-chip>
-          <mat-chip>Cat</mat-chip>
-          <mat-chip>Fish</mat-chip>
-          <mat-chip>Bird</mat-chip>
+          <mat-chip>Feeds</mat-chip>
+          <mat-chip>Medicine</mat-chip>
         </mat-chip-list>
       </div>
 
@@ -103,7 +101,7 @@
       <h3>{{breed}}</h3>
       <h4>{{price | currency: '₱'}}</h4>
 
-      <p>{{description}}</p>
+      <p>per {{description}}</p>
     </div>
     <div class="buy-control">
       <div class="quant-control">

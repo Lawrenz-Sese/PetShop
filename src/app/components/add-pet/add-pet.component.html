@@ -3,7 +3,7 @@
   <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
     (mouseleave)="mouseleave()">
     <div class="user-profile">
-      <img src="./assets/visual/logo.png">
+      <img src="./assets/visual/benef-logo.jpg">
     </div>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
@@ -11,7 +11,7 @@
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
-      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Product Panel
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/orders" *ngIf="isAdmin == '1'">
@@ -60,11 +60,11 @@
 
     <div class="container">
       <div class="title">
-        <h3>Pet Panel</h3>
+        <h3>Products Panel</h3>
       </div>
 
       <div class="button-add">
-        <button (click)="addPet()">Add Pet</button>
+        <button (click)="addPet()">Add Products</button>
       </div>
 
       <div class="pet-container">
@@ -96,7 +96,7 @@
 
 <ng-template #AddPet>
   <h4 class="titles" mat-dialog-title style="display: flex; align-items: center;">
-    Add New Pet
+    Add New Products
   </h4>
   <mat-divider></mat-divider>
 
@@ -117,7 +117,7 @@
 
     <div class="forms">
       <mat-form-field appearance="fill" style="width: 45%;">
-        <mat-label>Pet Breed</mat-label>
+        <mat-label>Product Name</mat-label>
         <input matInput [(ngModel)]="pet_breed">
       </mat-form-field>
 
@@ -127,29 +127,34 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 45%;">
-        <mat-label>Pet Price</mat-label>
+        <mat-label>Price</mat-label>
         <input matInput type="number" [(ngModel)]="pet_price">
       </mat-form-field>
 
 
       <mat-form-field appearance="fill" style="width: 45%;">
-        <mat-label>Category</mat-label>
-        <mat-select [(ngModel)]="pet_category">
-          <mat-option value="Dog">Dog</mat-option>
-          <mat-option value="Cat">Cat</mat-option>
-          <mat-option value="Bird">Bird</mat-option>
-          <mat-option value="Fish">Fish</mat-option>
+        <mat-label>Label</mat-label>
+        <mat-select [(ngModel)]="pet_description">
+          <mat-option value="Kilogram">Kilogram</mat-option>
+          <mat-option value="Pack">Pack</mat-option>
+          <mat-option value="Can">Can</mat-option>
+          <mat-option value="Bottle">Bottle</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 92%;">
-        <mat-label>Pet Description</mat-label>
-        <input matInput type="text" [(ngModel)]="pet_description">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="pet_category">
+          <mat-option value="Feeds">Feeds</mat-option>
+          <mat-option value="Medicine">Medicine</mat-option>
+          <mat-option value="Others">Others</mat-option>
+        </mat-select>
       </mat-form-field>
+
 
       <div class="btn-actions">
         <button (click)="closeModal()" class="add" style="width: auto; background-color: red; margin-right: 5px;">Cancel</button>
-        <button (click)="addPets()" class="add">Add Pet</button>
+        <button (click)="addPets()" class="add" style="width: auto;">Add Products</button>
       </div>
     </div>
   </div>
@@ -178,7 +183,7 @@
 
     <div class="forms">
       <mat-form-field appearance="fill" style="width: 45%;">
-        <mat-label>Pet Breed</mat-label>
+        <mat-label>Product Name</mat-label>
         <input matInput [(ngModel)]="pet_breeds">
       </mat-form-field>
 
@@ -188,27 +193,34 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 45%;">
-        <mat-label>Pet Price</mat-label>
+        <mat-label>Price</mat-label>
         <input matInput type="number" [(ngModel)]="pet_prices">
       </mat-form-field>
 
 
       <mat-form-field appearance="fill" style="width: 45%;">
         <mat-label>Category</mat-label>
-        <mat-select [(ngModel)]="pet_categorys">
-          <mat-option value="Dog">Dog</mat-option>
-          <mat-option value="Cat">Cat</mat-option>
+        <mat-select [(ngModel)]="pet_descriptions">
+          <mat-option value="Kilogram">Kilogram</mat-option>
+          <mat-option value="Pack">Pack</mat-option>
+          <mat-option value="Can">Can</mat-option>
+          <mat-option value="Bottle">Bottle</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="fill" style="width: 92%;">
-        <mat-label>Pet Description</mat-label>
-        <input matInput type="text" [(ngModel)]="pet_descriptions">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="pet_categorys">
+          <mat-option value="Feeds">Feeds</mat-option>
+          <mat-option value="Medicine">Medicine</mat-option>
+          <mat-option value="Others">Others</mat-option>
+        </mat-select>
       </mat-form-field>
+
 
       <div class="btn-actions">
         <button (click)="closeModal()" class="add" style="width: auto; background-color: red; margin-right: 5px;">Cancel</button>
-        <button (click)="updatePets()" class="add" style="width: auto;">Update Pet</button>
+        <button (click)="updatePets()" class="add" style="width: auto;">Update Product</button>
       </div>
     </div>
   </div>

@@ -39,7 +39,7 @@ export class OrdersComponent implements OnInit {
 
   code: any;
   checkoutDetails: any = {};
-  checkoutInfo: any ={};
+  checkoutInfo: any = {};
   openView(e) {
     this.dialog.open(this.ViewOrders);
 
@@ -58,7 +58,18 @@ export class OrdersComponent implements OnInit {
     this.orderInfo.code = checkoutDetails[0].code;
     this.orderInfo.isApproved = 1;
 
-    this.ds.sendRequest("approveOrder", this.orderInfo).subscribe((res) => {});
+    this.ds.sendRequest("approveOrder", this.orderInfo).subscribe((res) => { });
+
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Order Approve',
+      showConfirmButton: false,
+      timer: 1500
+    })
+
+    this.dialog.closeAll();
+    this.pullOrders();
 
     console.log(this.orderInfo)
   }
@@ -66,8 +77,27 @@ export class OrdersComponent implements OnInit {
   declineOrder(checkoutDetails) {
     this.orderInfo.code = checkoutDetails[0].code;
     this.orderInfo.isApproved = 2;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ds.sendRequest("approveOrder", this.orderInfo).subscribe((res) => { });
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+      this.dialog.closeAll();
+      this.pullOrders();
+    })
 
-    this.ds.sendRequest("approveOrder", this.orderInfo).subscribe((res) => {});
 
     console.log(this.orderInfo)
   }
@@ -120,7 +150,7 @@ export class OrdersComponent implements OnInit {
     'Total',
     'Date',
     'Action'
-    
+
   ];
   dataSource = new MatTableDataSource(this.checkoutInfos);
 

@@ -100,7 +100,7 @@ export class AddPetComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'New Pet Added',
+      title: 'New Products Added',
       showConfirmButton: false,
       timer: 1500
     })

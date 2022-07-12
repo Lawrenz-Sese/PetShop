@@ -7,6 +7,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { PetListComponent } from './components/pet-list/pet-list.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'pet-lists', component: PetListComponent},
   { path: 'cart',      component: CartComponent},
   { path: 'checkout',  component: CheckoutComponent},
-  { path: 'orders',    component: OrdersComponent}
+  { path: 'orders',    component: OrdersComponent},
+  { path: 'profile',   component: ProfileComponent}
 ];
 
 @NgModule({

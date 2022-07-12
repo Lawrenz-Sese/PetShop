@@ -3,7 +3,7 @@
   <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
     (mouseleave)="mouseleave()">
     <div class="user-profile">
-      <img src="./assets/visual/logo.png">
+      <img src="./assets/visual/benef-logo.jpg">
     </div>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
@@ -68,6 +68,7 @@
           <div class="cart-card" *ngFor="let cart of cart">
             <div class="cart-image">
               <img src="{{cart.pet_img}}" alt="">
+              <mat-icon class="checkout" title="Checkout Item" (click)="checkoutSolo(cart)">shopping_cart</mat-icon>
             </div>
             <div class="cart-info">
               <h3>{{cart.pet_breed}} ({{cart.pet_price | currency: 'P'}})</h3>

@@ -3,7 +3,7 @@
   <mat-sidenav #drawer [mode]="isLargeScreen() ? 'side' : 'over'" [opened]="isLargeScreen()" (mouseenter)="mouseenter()"
     (mouseleave)="mouseleave()">
     <div class="user-profile">
-      <img src="./assets/visual/logo.png">
+      <img src="./assets/visual/benef-logo.jpg">
     </div>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/dashboard" style="margin-top: 20%;">
@@ -11,7 +11,7 @@
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet" *ngIf="isAdmin == '1'">
-      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Product Panel
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout" *ngIf="isAdmin == '0'">
@@ -81,7 +81,7 @@
           </div>
 
           <div class="title" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2%;">
-            <h3 style="margin-left: 0;">Featured Pets</h3>
+            <h3 style="margin-left: 0;">Featured Products</h3>
             <span style="margin-right: 40px; font-size: .9rem; cursor: pointer;" class="see" routerLink="/pet-lists">See more ...</span>
           </div>
 
