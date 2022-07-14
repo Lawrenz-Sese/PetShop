@@ -40,7 +40,8 @@ import { PetListComponent } from './components/pet-list/pet-list.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrdersComponent } from './components/orders/orders.component';
-import { ProfileComponent } from './components/profile/profile.component'
+import { ProfileComponent } from './components/profile/profile.component';
+import { FavoriteComponent } from './components/favorite/favorite.component'
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { ProfileComponent } from './components/profile/profile.component'
     CartComponent,
     CheckoutComponent,
     OrdersComponent,
-    ProfileComponent
+    ProfileComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,

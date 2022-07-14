@@ -10,8 +10,12 @@
       <mat-icon style="margin-right: 10%; margin-left: 13%;">grid_view</mat-icon> Dashboard
     </button>
 
-    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet">
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet" *ngIf="isAdmin == '1'">
       <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Product Panel
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout" *ngIf="isAdmin == '0'">
+      <mat-icon style="margin-right: 10%; margin-left: 10%;">pets</mat-icon> Checkout Items
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/orders" *ngIf="isAdmin == '1'">
@@ -47,7 +51,7 @@
           <mat-icon>person</mat-icon>
           <span>Account Information</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/favorite">
           <mat-icon>favorite</mat-icon>
           <span> View Favorites</span>
         </button>
@@ -68,9 +72,24 @@
             <h3>Cart Items</h3>
 
             <div class="cart-tab">
-                <div class="cart"></div>
-                <div class="cart"></div>
-                <div class="cart"></div>
+                <div class="cart">
+                  <h3>Cart Items</h3>
+                  <div class="counter">
+                    <h3>{{cartCounter}}</h3>
+                  </div>
+                </div>
+                <div class="cart">
+                  <h3>Checkout Items</h3>
+                  <div class="counter">
+                    <h3>{{checkoutCounter}}</h3>
+                  </div>
+                </div>
+                <div class="cart">
+                  <h3>Favorite Items</h3>
+                  <div class="counter">
+                    <h3>{{favoritesCounter}}</h3>
+                  </div>
+                </div>
                 <div class="cart"></div>
             </div>
         </div>

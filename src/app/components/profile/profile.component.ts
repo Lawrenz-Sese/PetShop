@@ -22,7 +22,10 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pullUser()
+    this.pullUser();
+    this.pullFavorite();
+    this.pullCart();
+    this.pullCheckout();
   }
 
   isDisabled: boolean = true;
@@ -34,12 +37,50 @@ export class ProfileComponent implements OnInit {
     this.isDisabled = true;
   }
 
+  favoriteInfo: any = {};
+  isFavorite: any;
+  favorites: any;
+  favoritesCounter = 0;
+  pullFavorite() {
+    this.favoriteInfo.user_id = localStorage.getItem('user_id');
+    this.ds.sendRequest("favorite", this.favoriteInfo).subscribe((res) => {
+      this.favorites = res.payload;
+      for (let i = 0; i <= this.favorites.length; i++) {
+        this.favoritesCounter = i;
+      }
+    });
+  }
+
+  checkout: any;
+  checkoutCounter = 0;
+  pullCheckout() {
+    this.favoriteInfo.user_id = localStorage.getItem('user_id');
+    this.ds.sendRequest("checkout", this.favoriteInfo).subscribe((res) => {
+      this.checkout = res.payload;
+      for (let i = 0; i <= this.checkout.length; i++) {
+        this.checkoutCounter = i;
+      }
+    });
+  }
+
+  cart: any;
+  cartCounter = 0;
+  pullCart() {
+    this.favoriteInfo.user_id = localStorage.getItem('user_id');
+    this.ds.sendRequest("cart", this.favoriteInfo).subscribe((res) => {
+      this.cart = res.payload;
+      for (let i = 0; i <= this.cart.length; i++) {
+        this.cartCounter = i;
+      }
+    });
+  }
+
   user: any;
   name: any;
   address: any;
   email: any;
   contact: any;
-  userInfo: any ={};
+  userInfo: any = {};
   pullUser() {
     this.userInfo.user_id = localStorage.getItem('user_id');
     this.ds.sendRequest("user", this.userInfo).subscribe((res) => {

@@ -11,11 +11,19 @@
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/add-pet" *ngIf="isAdmin == '1'">
-      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Pet Panel
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Product Panel
     </button>
 
     <button mat-button class="button" routerLinkActive="selected" routerLink="/checkout" *ngIf="isAdmin == '0'">
       <mat-icon style="margin-right: 10%; margin-left: 10%;">pets</mat-icon> Checkout Items
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/orders" *ngIf="isAdmin == '1'">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Orders Panel
+    </button>
+
+    <button mat-button class="button" routerLinkActive="selected" routerLink="/transactions" *ngIf="isAdmin == '1'">
+      <mat-icon style="margin-right: 10%; margin-left: 13%;">pets</mat-icon> Transactions
     </button>
 
 
@@ -33,7 +41,7 @@
       <span class="example-spacer"></span>
 
       <div class="user__name">
-        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu">{{user_name}}
+        <span style="display: flex; align-items: center;" [matMenuTriggerFor]="menu"> {{user_name}}
           <mat-icon>arrow_drop_down</mat-icon> </span>
       </div>
 
@@ -56,8 +64,9 @@
 
     <div class="container">
       <div class="title">
-        <h3>Product List</h3>
+        <h3>Favorite Panel</h3>
       </div>
+
 
       <div class="sorter">
         <mat-chip-list aria-label="Fish selection">
@@ -68,62 +77,33 @@
       </div>
 
       <div class="pet-container">
-        <div class="pet-card" *ngFor="let pets of pets">
+        <div class="pet-card" *ngFor="let favorites of favorites">
           <div class="pet-image">
-            <img src="{{pets.pet_img}}" alt="">
-            <div class="icons" *ngFor="let favorites of favorites">
-              <mat-icon class="favorite" title="Favorites" *ngIf="favorites.pet_id == pets.pet_id" style="color: red">favorite</mat-icon>
-            </div>
+            <img src="{{favorites.pet_img}}" alt="">
             <!-- <mat-icon class="favorite" title="Remove from Favorites" *ngIf="favorite == 1" style="color: red">favorite
             </mat-icon> -->
-            <div class="badge">
-              <p *ngIf="pets.quantity > 1">Available</p>
+            <div class="badge" *ngFor="let pets of pets">
+              <p *ngIf="pets.pet_breed == favorites.pet_breed && pets.quantity >= '1'">Available</p>
+              <p *ngIf="pets.pet_breed == favorites.pet_breed && pets.quantity <= '1'">Not Available</p>
             </div>
           </div>
           <div class="pet-info">
-            <h3>{{pets.pet_breed}}</h3>
-            <h4>{{pets.pet_price | currency: '₱'}} | {{pets.quantity}} Available.</h4>
-            <div class="btn" style="margin: auto; width: 95%; display: flex; gap: 1px; align-items: center; justify-content: center;">
-              <button *ngIf="pets.quantity < 1" disabled style="background-color:#424242; margin-right: 3px;">Sold</button>
-              <button *ngIf="pets.quantity > 1" (click)="openBuy(pets)" style="width: 80%">Add to Cart</button>
-              <mat-icon style="cursor: pointer; border: 1px solid #cdcdcd; padding: 7px; border-radius: 3px; color: red" title="Add to Favorite" (click)="addFavorite(pets)">favorite</mat-icon>
+            <h3>{{favorites.pet_breed}}</h3>
+            <h4>{{favorites.pet_price | currency: '₱'}}</h4>
+            <div class="btn">
+              <div *ngFor="let pets of pets">
+                <button *ngIf="pets.pet_breed == favorites.pet_breed && pets.quantity <= '1'" disabled style="background-color:#424242">Sold</button>
+              </div>
+              <div *ngFor="let pets of pets"  style="margin: auto; width: 95%; display: flex; gap: 1px; align-items: center; justify-content: center;">
+                <button *ngIf="pets.pet_breed == favorites.pet_breed && pets.quantity >= '1'" style="width: 80%" routerLink="/pet-lists">Add to Cart</button>
+                <mat-icon *ngIf="pets.pet_breed == favorites.pet_breed && pets.quantity >= '1'"  style="cursor: pointer; border: 1px solid #cdcdcd; padding: 7px; border-radius: 3px;"
+                  title="Remove from Favorite" (click)="deleteFavorite(favorites.fav_id)">delete</mat-icon>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
   </div>
 </mat-sidenav-container>
-
-<ng-template #BuyItem>
-  <div class="buy-container">
-    <div class="buy-image">
-      <img src="{{image}}" alt="">
-    </div>
-    <div class="buy-info">
-      <h3>{{breed}}</h3>
-      <h4>{{price | currency: '₱'}}</h4>
-
-      <p>per {{description}}</p>
-    </div>
-    <div class="buy-control">
-      <div class="quant-control">
-        <div>
-          <button (click)="counter('minus')" *ngIf="count <= 0" disabled>-</button>
-          <button (click)="counter('minus')" *ngIf="count >= 1">-</button>
-          <p>{{count}}</p>
-          <button (click)="counter('add')"  *ngIf="count >= quantity" disabled>+</button>
-          <button (click)="counter('add')"  *ngIf="count < quantity">+</button>
-        </div>
-        <div>
-          <h3> Total : {{total | currency: '₱'}}</h3>
-        </div>
-      </div>
-    </div>
-    <div class="buy-btn">
-      <button (click)="addCart()">Add to Cart</button>
-    </div>
-  </div>
-</ng-template>

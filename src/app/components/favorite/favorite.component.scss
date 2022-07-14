@@ -275,125 +275,102 @@ mat-form-field input {
   }
 }
 
-.profile-tab {
-  width: 95%;
-  height: 100vh;
-  margin: auto;
+.sorter {
+  width: 100%;
+  display: flex;
   margin-top: 2%;
+
+  mat-chip-list {
+    margin-left: 30px;
+
+    mat-chip {
+      padding: 15px 30px 15px 30px;
+      background-color: #fcfbfd;
+      border: 1px solid #cdcdcd;
+      font-size: 1rem;
+    }
+  }
+}
+
+.pet-container {
+  width: 95%;
+  height: auto;
+  margin: auto;
+  margin-top: 3%;
   display: flex;
   flex-direction: row;
   gap: 10px;
+  flex-wrap: wrap;
 
+  .pet-card {
+    width: 23%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
 
-  .ecom-profile {
-    width: 40%;
-    height: 100%;
-
-    h3 {
-      font-size: 1.2rem;
-      margin-left: 0;
-      margin-top: 0;
-    }
-
-    .cart-tab {
-      margin-top: 3%;
+    .pet-image {
       width: 100%;
-      height: auto;
+      height: 60%;
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 5px;
-    
+      position: relative;
 
-      .cart:nth-child(2) {
-        background-image: url('../../../assets/visual/trolley.png');
+      img {
+        width: 100%;
+        object-fit: cover;
       }
 
-      .cart:nth-child(3) {
-        background-image: url('../../../assets/visual/heart.png');
-      }
+      .badge {
+        position: absolute;
+        background-color: #3e3e3f;
+        right: 0;
 
-      .cart:nth-child(4) {
-        background-image: url('../../../assets/visual/benef-logo.jpg');
-      }
-
-      .cart {
-        width: 49%;
-        height: 200px;
-        border-radius: 5px;
-        background-color: #ffffff;
-        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-        background-image: url('../../../assets/visual/cart.png');
-        background-size: 40%;
-        background-repeat: no-repeat;
-        background-position: 120px 80px;
-
-
-        h3 {
-          font-size: 1rem;
-          margin-top: 10px;
-          margin-left: 10px;
-        }
-
-        .counter {
-          width: 100%;
-          height: auto;
-          margin-top: 2%;
-
-          h3 {
-            font-size: 3rem;
-            font-weight: 700;
-          }
+        p {
+          color: #fff;
+          padding: 7px;
         }
       }
-    }
-  }
-  
 
-  .profile {
-    width: 60%;
-    height: 100%;
-
-    h3 {
-      font-size: 1.2rem;
-      margin-left: 0;
-      margin-top: 0;
+      .favorite {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        font-size: 2rem;
+        color: #404040;
+        cursor: pointer;
+      }
     }
 
-    .fields {
+    .pet-info {
       width: 100%;
-      height: auto;
-      margin-top: 2%;
+      height: 40%;
       display: flex;
       flex-direction: column;
-      gap: 2px;
 
-
-      mat-form-field {
-        width: 80%;
-        font-size: 14px;
-        font-weight: 500;
+      h3 {
+        margin-left: 0;
+        font-size: 1.1rem;
       }
 
-      .btn {
-        display: flex;
-        flex-direction: row;
-        gap: 0px;
+      h4 {
+        color: #009793;
+      }
 
-        button {
-          width: 150px;
-          padding: 10px 6px 10px 6px;
-          font-size: .9rem;
-          font-weight: 500;
-          border: none;
-          border-radius: 3px;
-          background-color: #009793;
-          color: #fff;
-        }
+      button {
+        padding: 7px;
+        border: none;
+        border-radius: 3px;
+        background-color: #009793;
+        color: #fff;
+        font-size: .9rem;
+        font-weight: 500;
+        width: 95%;
+        margin: auto;
+        cursor: pointer;
       }
     }
   }
 }
+
 
 @media only screen and (max-width:480px) {
 

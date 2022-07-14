@@ -117,6 +117,25 @@ public function AddCheckoutDetails($d) {
     return $this->gm->sendPayload($payload, $remarks, $message, $code);
 }
 
+public function AddFavorite($d) {
+
+    $code = 401;
+    $payload = null;
+    $remarks = "failed";
+    $message = "Unable to retrieve data";
+
+    $res = $this->gm->insert('tbl_favorite', $d);
+
+    if($res['code']==200) {
+        $code = 200;
+        $payload = $res;
+        $remarks = "success";
+        $message = "Successfully added to the database";
+
+    }
+    return $this->gm->sendPayload($payload, $remarks, $message, $code);
+}
+
 public function deletePet($d)
 {
     $payload = null;
@@ -189,7 +208,25 @@ public function deleteCart($d)
     return $this->gm->sendPayload($payload, $remarks, $message, $code);
 }
 
+public function deleteFavorite($d)
+{
+    $payload = null;
+    $remarks = "failed";
+    $message = "Unable to retrieve data";
+    $sql = "DELETE FROM tbl_favorite WHERE fav_id = '$d->fav_id'";
 
+    $res = $this->gm->generalQuery($sql, "Failed");
+
+    if ($res['code'] != 200) {
+        $code = 200;
+        $payload = $res;
+        $remarks = "success";
+        $message = "Successfully added to the database";
+    }
+    return $this->gm->sendPayload($payload, $remarks, $message, $code);
 }
 
-?>
+
+
+
+}

@@ -22,10 +22,12 @@ export class PetListComponent implements OnInit {
 
   ngOnInit(): void {
     this.pullPets();
+    this.pullFavorite();
   }
 
   isAdmin = localStorage.getItem("isAdmin");
   user_name = localStorage.getItem("user_name");
+  user_ids = localStorage.getItem("user_id")
 
   @ViewChild('BuyItem', { static: true }) BuyItem: TemplateRef<any>;
 
@@ -87,6 +89,15 @@ export class PetListComponent implements OnInit {
     });
   }
 
+  favorites: any;
+  isFavorite: any;
+  pullFavorite() {
+    this.favoriteInfo.user_id = localStorage.getItem('user_id');
+    this.ds.sendRequest("favorite", this.favoriteInfo).subscribe((res) => {
+      this.favorites = res.payload;
+    });
+  }
+
   showFiller = false;
   sidenav!: MatSidenav;
   isExpanded = true;
@@ -120,6 +131,27 @@ export class PetListComponent implements OnInit {
     this.route.navigate(['']);
   }
 
-  favorite = 1;
+
+  favoriteInfo : any = {};
+  addFavorite(pets) {
+    this.favoriteInfo.pet_id = pets.pet_id;
+    this.favoriteInfo.pet_breed = pets.pet_breed;
+    this.favoriteInfo.pet_price = pets.pet_price;
+    this.favoriteInfo.pet_img = pets.pet_img;
+    this.favoriteInfo.user_id = localStorage.getItem('user_id');
+    this.favoriteInfo.isFavorite = 1;
+
+    this.ds.sendRequest("addFavorite", this.favoriteInfo).subscribe((res) => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Item saved to Favorite',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this.route.navigate(['/favorite'])
+    });
+
+  }
 
 }

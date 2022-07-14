@@ -69,6 +69,11 @@
 					echo json_encode($post->AddCheckoutDetails($d), JSON_PRETTY_PRINT);
 				break;
 
+				case 'addFavorite':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($post->AddFavorite($d), JSON_PRETTY_PRINT);
+				break;
+
 				case 'pets':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($get->pullPets($d), JSON_PRETTY_PRINT);
@@ -82,6 +87,11 @@
 				case 'orders':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($get->pullOrders($d), JSON_PRETTY_PRINT);
+				break;
+
+				case 'favorite':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($get->pullFavorites($d), JSON_PRETTY_PRINT);
 				break;
 
 				case 'checkoutDetails':
@@ -107,6 +117,11 @@
 				case 'deleteCart':
 					$d = json_decode(base64_decode(file_get_contents("php://input")));
 					echo json_encode($post->deleteCart($d), JSON_PRETTY_PRINT);
+				break;
+
+				case 'deleteFavorite':
+					$d = json_decode(base64_decode(file_get_contents("php://input")));
+					echo json_encode($post->deleteFavorite($d), JSON_PRETTY_PRINT);
 				break;
 
 				case 'updatePets':
