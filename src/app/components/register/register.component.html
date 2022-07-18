@@ -71,7 +71,18 @@
   </ng-template>
 
   <ng-template #verifyModal>
-    <input type="text" [(ngModel)]="verificationCode" />
-    <button (click)="verifyUser()">Verify Me</button>
+    <div class="verif" style="display: flex; flex-direction: column; gap: 5px">
+      <h3>Insert your OTP here</h3>
+      <input type="text" placeholder="Insert otp here" style="font-size: 16px" [(ngModel)]="verificationCode" />
+      <button style="        width: 100%;
+      margin: auto;
+      padding: 9px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00b894;
+      color: #f9f9f9;
+      font-size: 1rem;
+      font-weight: 500;" (click)="verifyUser()">Verify Me</button>
+    </div>
   </ng-template>
 </div>

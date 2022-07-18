@@ -139,4 +139,8 @@ export class RegisterComponent implements OnInit {
         }
       });
   }
+
+  openMe() {
+    this.dialog.open(this.verifyModal);
+  }
 }
